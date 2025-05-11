@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Manage Attendance</title>
+</head>
+<body class="bg-gradient-to-b from-blue-100 via-purple-200 to-pink-200 min-h-screen">
+    <div class="overflow-x-auto bg-gradient-to-r from-purple-200 via-blue-200 to-green-200 p-6 rounded-lg shadow-lg">
+        <table class="min-w-full table-auto bg-white bg-opacity-80 backdrop-blur-md rounded-lg">
+    
+        <div class="container mx-auto py-8 px-4">
+            <h1 class="text-3xl font-bold mb-4">Manage Attendance</h1>
+            
+            
+            <!-- Bulk Attendance Section -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <h2 class="text-xl font-semibold mb-4">Mark Bulk Attendance</h2>
+                <form action="/mark_bulk_attendance" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Date:</label>
+                        <input type="date" name="date" class="w-full p-2 border rounded" required>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-4 py-2">Student Name</th>
+                                    <th class="px-4 py-2">Status</th>
+                                    <th class="px-4 py-2">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <tr class="odd:bg-gradient-to-r odd:from-pink-200 odd:to-yellow-200 even:bg-gradient-to-r even:from-blue-200 even:to-green-200">
+                                    <td class="border px-4 py-2">{{ student }}</td>
+                                    <td class="border px-4 py-2">
+                                        <select name="status_{{ student }}" class="w-full p-2 border rounded">
+                                            <option value="Present">Present</option>
+                                            <option value="Absent">Absent</option>
+                                            <option value="Late">Late</option>
+                                            <option value="Excused">Excused</option>
+                                        </select>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                        <input type="text" name="remarks_{{ student }}" class="w-full p-2 border rounded" placeholder="Optional remarks">
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                      <button type="submit" class="bg-blue-500 text-white  px-4 py-2 rounded hover:bg-pink-600">
+                        Mark Bulk Attendance
+                    </button>
+                </div>
+                </form>
+            </div>
+
+            <!-- Individual Attendance Section -->
+            <div class="bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 p-6 rounded-lg shadow-lg mb-8">
+                <h2 class="text-xl font-semibold mb-4">Mark Individual Attendance</h2>
+                <form action="/manage_attendance" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Student Name:</label>
+                        <select name="student_name" class="w-full p-2 border rounded" required>
+                            {% for student in students %}
+                            <option value="{{ student }}">{{ student }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Date:</label>
+                        <input type="date" name="date" class="w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Status:</label>
+                        <select name="status" class="w-full p-2 border rounded" required>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Late">Late</option>
+                            <option value="Excused">Excused</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Remarks:</label>
+                        <input type="text" name="remarks" class="w-full p-2 border rounded" placeholder="Optional remarks">
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+                        Mark Attendance
+                    </button>
+                </form>
+            </div>
+
+            <!-- Attendance Records Section -->
+            <div class="bg-gradient-to-r from-blue-200 via-cyan-300 to-green-200 p-6 rounded-lg shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Attendance Records</h2>
+                    <div class="space-x-2">
+                        <input type="date" id="filter-date" class="p-2 border rounded" placeholder="Filter by date">
+                        <select id="filter-status" class="p-2 border rounded">
+                            <option value="">All Status</option>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Late">Late</option>
+                            <option value="Excused">Excused</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Date</th>
+                                <th class="px-4 py-2">Status</th>
+                                <th class="px-4 py-2">Remarks</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in attendance_records %}
+                            <tr>
+                                <td class="border px-4 py-2">{{ record.Name }}</td>
+                                <td class="border px-4 py-2">{{ record.Date }}</td>
+                                <td class="border px-4 py-2">
+                                    <span class="px-2 py-1 rounded-full text-sm
+                                        {% if record.Status == 'Present' %}
+                                            bg-green-100 text-green-800
+                                        {% elif record.Status == 'Absent' %}
+                                            bg-red-100 text-red-800
+                                        {% elif record.Status == 'Late' %}
+                                            bg-yellow-100 text-yellow-800
+                                        {% else %}
+                                            bg-blue-100 text-blue-800
+                                        {% endif %}
+                                    ">
+                                        {{ record.Status }}
+                                    </span>
+                                </td>
+                                <td class="border px-4 py-2">{{ record.Remarks if record.Remarks else '-' }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Attendance Summary -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-green-700">Present</h3>
+                        <p class="text-2xl font-bold text-green-800">
+                            {{ attendance_records | selectattr('Status', 'equalto', 'Present') | list | length }}
+                        </p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-red-700">Absent</h3>
+                        <p class="text-2xl font-bold text-red-800">
+                            {{ attendance_records | selectattr('Status', 'equalto', 'Absent') | list | length }}
+                        </p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-yellow-700">Late</h3>
+                        <p class="text-2xl font-bold text-yellow-800">
+                            {{ attendance_records | selectattr('Status', 'equalto', 'Late') | list | length }}
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-blue-700">Excused</h3>
+                        <p class="text-2xl font-bold text-blue-800">
+                            {{ attendance_records | selectattr('Status', 'equalto', 'Excused') | list | length }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Dashboard Button -->
+        <div class="fixed bottom-8 right-8">
+            <a href="/dashboard" class="bg-purple-800 text-white px-6 py-3 rounded-full hover:bg-gray-700 shadow-lg">
+                Back to Dashboard
+            </a>
+        </div>
+ </div>
+    </body>
+    </html>

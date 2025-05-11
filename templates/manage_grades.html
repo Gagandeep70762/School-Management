@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Manage Grades</title>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto py-8 px-4">
+        <h1 class="text-3xl font-bold mb-8">Manage Grades</h1>
+        
+        <!-- Record Grade Section -->
+        <div class="bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-xl font-semibold mb-4">Record Grade</h2>
+            <form action="/manage_grades" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Student Name:</label>
+                    <select name="student_name" class="w-full p-2 border rounded" required>
+                        {% for student in students %}
+                        <option value="{{ student }}">{{ student }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Subject:</label>
+                    <input type="text" name="subject" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Grade:</label>
+                    <input type="text" name="grade" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Remarks:</label>
+                    <input type="text" name="remarks" class="w-full p-2 border rounded" placeholder="Optional remarks">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+                    Record Grade
+                </button>
+            </form>
+        </div>
+
+        <!-- Grade Records Section -->
+        <div class="bg-gradient-to-r from-blue-300 via-cyan-300 to-green-300 p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-semibold mb-4">Grade Records</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Subject</th>
+                            <th class="px-4 py-2">Grade</th>
+                            <th class="px-4 py-2">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in grade_records %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ record.Name }}</td>
+                            <td class="border px-4 py-2">{{ record.Subject }}</td>
+                            <td class="border px-4 py-2">{{ record.Grade }}</td>
+                            <td class="border px-4 py-2">{{ record.Remarks if record.Remarks else '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="fixed bottom-8 right-8">
+        <a href="/dashboard" class="bg-purple-800 text-white px-6 py-3 rounded-full hover:bg-gray-700 shadow-lg">
+            Back to Dashboard
+        </a>
+    </div>
+</body>
+</html>

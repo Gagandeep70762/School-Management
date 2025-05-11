@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            background-image: url("https://resources.youscience.com/rs/806-BFU-539/images/1200x627_Brightpath-b2s-webinar-featured-image.png?version=0");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            background: linear-gradient(90deg,rgb(236, 16, 126),rgb(52, 97, 234));
+            color: white;
+            padding: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .button-container {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .button {
+            text-decoration: none;
+            padding: 15px 20px;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            width: 200px;
+            transition: transform 0.3s ease-in-out;
+            
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-green { background-color: #28a745; } 
+        .btn-yellow { background-color: #ffc107; } 
+        .btn-blue { background-color: #007bff; } 
+        .btn-purple { background-color: #6f42c1; } 
+        .btn-red { background-color: #dc3545; } 
+        .btn-green { background-color:rgb(16, 255, 104); } 
+        .btn-pink { background-color:rgb(244, 28, 154); } 
+    
+        @media (max-width: 768px) {
+            .button-container {
+                position: static;
+                margin: 20px auto;
+                align-items: center;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Welcome To ! BrightPath School of Innovation & Knowledge, Admin!</div>
+
+    <!-- Buttons Stacked on Right -->
+    <div class="button-container">
+        <a href="{{ url_for('enroll_student', role='admin') }}" class="block bg-green-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-purple-400 transition">Enroll Student</a>
+        <a href="{{ url_for('manage_attendance', role='admin') }}" class="block bg-yellow-400 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-pink-400 transition">Manage Attendance</a>
+        <a href="{{ url_for('manage_grades', role='admin') }}" class="block bg-blue-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-red-400 transition">Grade Management</a>
+        <a href="{{ url_for('manage_timetable', role='admin') }}" class="block bg-cyan-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-green-400 transition">Timetable Scheduling</a>
+        <a href="{{ url_for('manage_fees', role='admin') }}" class="block bg-red-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-pink-400 transition">Fee Management</a>
+        <a href="{{ url_for('create_teacher', role='admin') }}" class="block bg-violet-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-cyan-400 transition">Create Teacher</a>
+        <a href="{{ url_for('create_student', role='admin') }}" class="block bg-orange-500 text-white py-6 px-4 rounded-lg text-center font-semibold hover:bg-gray-400 transition">Create Student</a>
+    </div>
+</body>
+</html>

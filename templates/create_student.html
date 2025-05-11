@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Student Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,rgb(233, 225, 234),rgb(237, 187, 246));
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(05px);
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: red;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            margin-bottom: 12px;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            align-text: center:+;
+            margin-left: 5%;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4caf50;
+            outline: none;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+        }
+
+        button {
+            padding: 15px;
+            background: linear-gradient(90deg,rgb(223, 72, 188),rgb(100, 22, 218));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            width: 90%;
+            transition: background-color 0.3s ease-in-out;
+            margin-bottom:20px;
+            margin-top:20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color:rgb(239, 19, 103);
+            text-decoration: none;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Student Account</h1>
+        <form method="POST">
+            <label for="student_pin">Student PIN:</label>
+            <input type="text" id="student_pin" name="student_pin" required>
+
+            <button type="submit">Create Account</button>
+        </form>
+        <br>
+        <a href="{{ url_for('login') }}" style="color:rgb(224, 37, 87); text-decoration: none;">Back to Login</a>
+    </div>
+</body>
+</html>
